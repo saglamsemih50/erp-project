@@ -1,10 +1,10 @@
 <?php
 
 namespace Modules\QRCode\Http\Controllers;
-
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Modules\QRCode\Enums\Type;
+use App\Http\Controllers\Controller;
 
 class QRCodeController extends Controller
 {
@@ -14,20 +14,20 @@ class QRCodeController extends Controller
      */
     public function index()
     {
-
         return view('qrcode::pages.qrcode.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
     public function create()
     {
 
         return view('qrcode::pages.qrcode.ajax.create');
     }
-
+    public function fields(Type $type)
+    {
+        $view = 'qrcode::pages.fields.' . $type->value;
+        $html = view($view, $this->data)->render();
+        return  $html;
+    }
     /**
      * Store a newly created resource in storage.
      * @param Request $request

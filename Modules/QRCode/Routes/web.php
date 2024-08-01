@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use Modules\QRCode\Http\Controllers\QRCodeController;
 
@@ -16,6 +17,11 @@ use Modules\QRCode\Http\Controllers\QRCodeController;
 Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
 
     Route::get("qrcode", [QRCodeController::class, "index"])->name("qrcode");
-    Route::get("qrcode/create",[QRCodeController::class,"create"])->name("create");
-
+    Route::get("qrcode/create", [QRCodeController::class, "create"])->name("create");
+    Route::group(
+        ['prefix' => 'qrcode', 'as' => 'qrcode.'],
+        function () {
+            Route::get('fields/{type}', [QRCodeController::class, 'fields'])->name('fields');
+        }
+    );
 });

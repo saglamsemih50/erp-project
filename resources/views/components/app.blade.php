@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}">
+    @yield("links")
 </head>
 
 <body>
@@ -443,6 +444,8 @@
     <!-- Custom js for this page -->
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <!-- End custom js for this page -->
+
+    @yield('scripts')
 </body>
 
 </html>
