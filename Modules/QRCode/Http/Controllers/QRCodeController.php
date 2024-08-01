@@ -24,7 +24,8 @@ class QRCodeController extends Controller
      */
     public function create()
     {
-        return view('qrcode::create');
+
+        return view('qrcode::pages.qrcode.ajax.create');
     }
 
     /**

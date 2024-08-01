@@ -16,5 +16,6 @@ use Modules\QRCode\Http\Controllers\QRCodeController;
 Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
 
     Route::get("qrcode", [QRCodeController::class, "index"])->name("qrcode");
+    Route::get("qrcode/create",[QRCodeController::class,"create"])->name("create");
 
 });
