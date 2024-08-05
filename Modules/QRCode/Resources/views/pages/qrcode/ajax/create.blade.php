@@ -1,6 +1,5 @@
 @section('links')
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
+
 @endsection
 @extends('components.app')
 @section('content')
@@ -49,14 +48,71 @@
                             </button>
                         </div>
                     </div>
+                    <h3 style="padding-bottom: 10px">
+                        Tasarım
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="size">Boyut</label>
+                                <input type="number" name="size" id="size" class="form-control" value="200"
+                                    min="200" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="margin">Margin</label>
+                                <input type="number" name="margin" id="margin" class="form-control" value="10"
+                                    min="10" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="foreground_color">Foreground Color</label>
+                                <div class="input-group color-picker">
+                                    <input type="text" name="foreground_color" id="foreground_color"
+                                        class="form-control height-35" value="#000000" required>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text height-35 colorpicker-input-addon"
+                                            id="foreground-color-addon">
+                                            <i style="background-color: #000000;"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="background_color">Background Color</label>
+                                <div class="input-group color-picker ">
+                                    <input type="text" name="background_color" id="background_color"
+                                        class="form-control height-35" value="#ffffff" required>
+                                    <div class="input-group-append  ">
+                                        <span class="input-group-text height-35 colorpicker-input-addon"
+                                            id="background-color-addon">
+                                            <i style="background-color: #ffffff;"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-primary mr-3">
+                           Kaydet
+                        </button>
+                        <a href="{{ route("qrcode") }}" class="btn btn-secondary">
+                          Geri
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 @endsection
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
     <script>
         $(document).ready(function() {
             $('body').on('change', '#type', function() {
@@ -83,12 +139,21 @@
                     }
                 });
             });
-
             function displayQrPlaceholder() {
 
                 $('.qr-preview img').addClass('d-none');
                 $('.qr-placeholder').removeClass('d-none');
             }
         });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.color-picker').colorpicker({
+                format: 'hex',
+                useAlpha: false,
+                container: true,
+                inline: false
+            });
+        })
     </script>
 @endsection
