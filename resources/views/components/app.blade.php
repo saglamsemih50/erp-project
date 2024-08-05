@@ -16,13 +16,24 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/owl-carousel-2/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/owl-carousel-2/owl.theme.default.min.css') }}">
     <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <!-- endinject -->
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {{-- Font Awrsome  --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    {{-- DataPicker.css --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+        rel="stylesheet">
+    {{-- TimePicker.css --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css"
+        rel="stylesheet">
+
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}">
-    @yield("links")
+    @yield('links')
 </head>
 
 <body>
@@ -194,8 +205,7 @@
                     </div>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link"
-                        href="{{ route('invoice') }}">
+                    <a class="nav-link" href="{{ route('invoice') }}">
                         <span class="menu-icon">
                             <i class="mdi mdi-file-document-box"></i>
                         </span>
@@ -444,6 +454,16 @@
     <!-- Custom js for this page -->
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
     <!-- End custom js for this page -->
+    {{-- DataPicker.js --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    {{-- TimePicker.js --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+
+    {{-- Istanbul Time --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.38/moment-timezone-with-data.min.js"></script>
+
 
     @yield('scripts')
 </body>

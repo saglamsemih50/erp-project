@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\QRCode\Http\Controllers;
+
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Modules\QRCode\Enums\Type;
@@ -19,7 +20,6 @@ class QRCodeController extends Controller
 
     public function create()
     {
-
         return view('qrcode::pages.qrcode.ajax.create');
     }
     public function fields(Type $type)
