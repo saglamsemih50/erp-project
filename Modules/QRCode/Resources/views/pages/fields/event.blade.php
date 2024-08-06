@@ -38,7 +38,6 @@
     <textarea id="note" name="note" class="form-control"></textarea>
 </div>
 
-
 <script type="text/javascript">
     $(document).ready(function() {
         var now = moment().tz('Europe/Istanbul').format('HH:mm');

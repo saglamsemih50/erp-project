@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
         ['prefix' => 'qrcode', 'as' => 'qrcode.'],
         function () {
             Route::get('fields/{type}', [QRCodeController::class, 'fields'])->name('fields');
+            Route::post('preview', [QRCodeController::class, 'preview'])->name('preview');
         }
     );
 });

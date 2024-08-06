@@ -6,6 +6,8 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Modules\QRCode\Enums\Type;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
+use Modules\QRCode\Support\QrCodeSupport;
 
 class QRCodeController extends Controller
 {
@@ -28,6 +30,52 @@ class QRCodeController extends Controller
         $html = view($view, $this->data)->render();
         return  $html;
     }
+    public function preview(Request $request)
+    {
+        $qr = $this->qrGenerate($request);
+        $qr = $qr->png()->build()->getDataUri();
+        return (['status' => 'success', 'qr' => $qr]);
+    }
+    private function qrGenerate(Request $request)
+    {
+        $qr = match (Type::tryFrom($request->type)) {
+            Type::email => QrCodeSupport::email($request->email, $request->subject, $request->message),
+            Type::event => $this->qrEvent($request),
+            Type::sms => QrCodeSupport::sms($request->mobile, $request->country_phonecode, $request->message),
+            Type::tel => QrCodeSupport::tel($request->mobile, $request->country_phonecode),
+            Type::text => QrCodeSupport::text($request->message),
+            Type::whatsapp => QrCodeSupport::whatsapp($request->mobile, $request->country_phonecode, $request->message),
+            Type::wifi => QrCodeSupport::wifi($request->name, $request->password, $request->encryption, $request->hidden),
+            Type::zoom => QrCodeSupport::url($request->url),
+            default => QrCodeSupport::text($request->message ?: ''),
+        };
+
+        $qrSize = $request->size ?? 400;
+        $qrMargin = $request->margin ?? 10;
+
+        $qr->size($qrSize)
+            ->margin($qrMargin)
+            ->backgroundColor(QrCodeSupport::color($request->background_color ?? '#ffffff'))
+            ->foregroundColor(QrCodeSupport::color($request->foreground_color ?? '#000000'));
+
+        return $qr;
+    }
+
+    private function qrEvent(Request $request)
+    {
+        $startDateTime = Carbon::parse($request->start_date . ' ' . $request->start_time);
+
+        $endDateTime = Carbon::parse($request->end_date . ' ' . $request->end_time);
+
+        return QrCodeSupport::event(
+            $request->title,
+            $startDateTime,
+            $endDateTime,
+            $request->location,
+            $request->note
+        );
+    }
+
     /**
      * Store a newly created resource in storage.
      * @param Request $request

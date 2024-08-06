@@ -156,4 +156,55 @@
             });
         })
     </script>
+     <script>
+        $('body').on('click', '.generate-qr', function($e) {
+            generateQr();
+        });
+
+        function generateQr() {
+
+            let form = $('#save-qrcode-data-form');
+            $.ajax({
+                url: '{{ route('qrcode.preview') }}',
+                type: 'POST',
+                data: form.serialize(),
+                beforeSend: function() {
+                    $('#loading').show();
+                },
+                success: function(response) {
+                    setQrPerview(response);
+                },
+                complete: function() {
+                    $('#loading').hide();
+                    console.log("Başarılı");
+                },
+                error: function(xhr, status, error) {
+                    console.error("Hata:", error);
+                }
+            });
+        }
+
+        function setQrPerview(image) {
+            $('.qr-preview img').attr('src', image.qr);
+            displayQr();
+        }
+
+        function clearFromErrors() {
+            $('#save-qrcode-data-form').find(".invalid-feedback").remove();
+            $('#save-qrcode-data-form').find(".is-invalid").each(function() {
+                $(this).removeClass("is-invalid");
+            });
+        }
+
+        function displayQr() {
+            console.log('Displaying ici');
+            $('.qr-preview img').removeClass('d-none');
+            $('.qr-placeholder').addClass('d-none');
+        }
+
+        function displayQrPlaceholder() {
+            $('.qr-preview img').addClass('d-none');
+            $('.qr-placeholder').removeClass('d-none');
+        }
+    </script>
 @endsection
