@@ -2,7 +2,6 @@
 
 namespace Modules\QRCode\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Modules\QRCode\Enums\Type;
 use App\Http\Controllers\Controller;
@@ -100,44 +99,43 @@ class QRCodeController extends Controller
         return redirect()->route("qrcode")->with("success", "Added QrCode")->with("alert-type", "success");
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('qrcode::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function edit($id)
     {
-        return view('qrcode::edit');
+        $this->qrCode = QRCode::findOrFail($id);
+        $this->formFields = $this->qrCode->form_data;
+        return view('qrcode::pages.qrcode.ajax.edit', $this->data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
     public function update(Request $request, $id)
     {
-        //
+        $qrCode = QRCode::findOrNew($id);
+        $qrCode->company_id = 1;
+        $qrCode->title = $request->input("qrTitle");
+        $qrCode->type = $request->input("type");
+        $qrCode->size = $request->input("size");
+        $qrCode->margin = $request->input("margin");
+        $qrCode->foreground_color = $request->input("foreground_color");
+        $qrCode->background_color = $request->input("background_color");
+        $qrCode->form_data = $request->except([
+            '_token',
+            'qrTitle',
+            'type',
+            'size',
+            'margin',
+            'foreground_color',
+            'background_color',
+        ]);
+
+        $qr = $this->qrGenerate($request);
+        $qrCode->data = $qr->png()->build()->getDataUri();
+        $qrCode->save();
+        return redirect()->route("qrcode")->with("success", "Added QrCode")->with("alert-type", "success");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $qrCode = QRCode::findOrFail($id);
+        $qrCode->delete();
+        return redirect()->route("qrcode")->with("success", "Delete QrCode")->with("alert-type", "success");
     }
 }

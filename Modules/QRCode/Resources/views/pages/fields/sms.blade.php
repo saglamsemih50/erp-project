@@ -9,10 +9,11 @@
             @endforeach
         </select>
         <input type="tel" class="form-control height-35 f-14" placeholder="Örn 0535351131" name="mobile"
-            id="mobile">
+            id="mobile" value="{{ $formFields['mobile'] ?? '' }}">
+
     </div>
 </div>
 <div class="col-md-12">
     <label for="message" class="mr-0 mr-lg-2 mr-md-2">Mesaj</label>
-    <textarea id="message" name="message" class="form-control mr-0 mr-lg-2 mr-md-2"></textarea>
+    <textarea id="message" name="message" class="form-control mr-0 mr-lg-2 mr-md-2">{{ $formFields['message'] ?? '' }}</textarea>
 </div>

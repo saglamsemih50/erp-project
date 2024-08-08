@@ -1,12 +1,12 @@
 <div class="col-md-4">
     <label for="name">Wifi Adı<span class="text-danger">*</span></label>
-    <input type="text" id="name" name="name" class="form-control" required>
+    <input type="text" id="name" name="name" class="form-control" value="{{ $formFields['name'] ?? '' }}" required>
 </div>
 
 <div class="col-md-4">
     <label for="password">Şifre</label>
     <div class="input-group">
-        <input type="password" name="password" id="password" class="form-control height-35 f-14">
+        <input type="password" name="password" id="password" class="form-control height-35 f-14" value="{{ $formFields['password'] ?? '' }}">
         <div class="input-group-append">
             <button type="button" class="btn btn-outline-secondary border-grey height-35 toggle-password">
                 +
@@ -16,11 +16,11 @@
 </div>
 
 <div class="col-md-4">
-    <label for="encryption">Ağ Türü</label>
-    <select id="encryption" name="encryption" class="form-control">
-        <option @if ('WEP') selected @endif value="WEP">WEP</option>
-        <option @if ('WPA') selected @endif value="WPA">WPA</option>
-        <option @if ('') selected @endif value="">Şifreleme Yok</option>
+    <label for="encryption" >Ağ Türü</label>
+    <select id="encryption" name="encryption" class="form-control ">
+        <option @if ('WEP' == ($formFields['encryption'] ?? '')) selected @endif value="WEP">Wep</option>
+        <option @if ('WPA' == ($formFields['encryption'] ?? '')) selected @endif value="WPA">Wpa</option>
+        <option @if ('' == ($formFields['encryption'] ?? '')) selected @endif value="">No Encryption</option>
     </select>
 </div>
 

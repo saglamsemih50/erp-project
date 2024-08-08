@@ -53,12 +53,13 @@
                         <td>{{ $qrCode->title }}</td>
                         <td>{{ $qrCode->type }}</td>
                         <td>
-                            <a href="" class="btn btn-warning btn-sm">
+                            <a href="{{ route('qrcode.edit', $qrCode->id) }}" class="btn btn-warning btn-sm">
                                 <i class="fa fa-edit"></i> Düzenle
                             </a>
-                            <button class="btn btn-danger btn-sm delete-qr-table-row">
+                            <a href="{{ route('qrcode.delete', $qrCode->id) }}"
+                                class="btn btn-danger btn-sm delete-qr-table" data-title="{{ $qrCode->title}}">
                                 <i class="fa fa-trash"></i> Sil
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 @endforeach
@@ -76,7 +77,18 @@
                     enabled: true
                 }
             })
-
         })
+    </script>
+    <script>
+        document.querySelectorAll(".delete-qr-table").forEach(function(button) {
+            button.addEventListener("click", function(event) {
+                const title=button.getAttribute('data-title');
+                const confirmed = confirm(title + " silmek istediğine emin misin ?");
+                if (!confirmed) {
+                    event.preventDefault();
+                }
+
+            })
+        });
     </script>
 @endsection

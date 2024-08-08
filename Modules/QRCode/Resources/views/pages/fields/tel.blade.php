@@ -11,6 +11,6 @@
                 </option>
             @endforeach
         </select>
-        <input type="tel" class="form-control height-35 f-14" placeholder="Örn 0535351131" name="mobile" id="mobile">
+        <input type="tel" class="form-control height-35 f-14" placeholder="Örn 0535351131" name="mobile" id="mobile" value="{{ $formFields['mobile'] ?? '' }}">
     </div>
 </div>
