@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
             Route::get("{id}/edit", [QRCodeController::class, "edit"])->name("edit");
             Route::post("{id}/update", [QRCodeController::class, "update"])->name("update");
             Route::get("{id}/update", [QRCodeController::class, "delete"])->name("delete");
+            Route::get("filter",[QRCodeController::class,"filter"])->name("filter");
         }
     );
 });

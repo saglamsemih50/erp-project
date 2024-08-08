@@ -30,7 +30,6 @@
         <div class="d-block d-lg-flex d-md-flex justify-content-between">
             <div id="table-actions" class="flex-grow-1 align-items-center mb-2 mb-lg-0 mb-md-0">
                 <a href="{{ route('create') }}" class="btn btn-primary ml-auto">{{ __('QR Kodu Oluştur') }}</a>
-
             </div>
         </div>
         <table class="table table-striped">
@@ -43,26 +42,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($qrCodeAll as $qrCode)
-                    <tr>
-                        <td>
-                            <a href="{{ $qrCode->data }}" class="popup-image">
-                                <img src="{{ $qrCode->data }}">
-                            </a>
-                        </td>
-                        <td>{{ $qrCode->title }}</td>
-                        <td>{{ $qrCode->type }}</td>
-                        <td>
-                            <a href="{{ route('qrcode.edit', $qrCode->id) }}" class="btn btn-warning btn-sm">
-                                <i class="fa fa-edit"></i> Düzenle
-                            </a>
-                            <a href="{{ route('qrcode.delete', $qrCode->id) }}"
-                                class="btn btn-danger btn-sm delete-qr-table" data-title="{{ $qrCode->title}}">
-                                <i class="fa fa-trash"></i> Sil
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
+                @include('qrcode::pages.qrcode.partials.table')
             </tbody>
         </table>
     </div>
@@ -82,7 +62,7 @@
     <script>
         document.querySelectorAll(".delete-qr-table").forEach(function(button) {
             button.addEventListener("click", function(event) {
-                const title=button.getAttribute('data-title');
+                const title = button.getAttribute('data-title');
                 const confirmed = confirm(title + " silmek istediğine emin misin ?");
                 if (!confirmed) {
                     event.preventDefault();
@@ -90,5 +70,29 @@
 
             })
         });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#filter_type').on('change', function() {
+                var type = $(this).val();
+                $.ajax({
+                    'url': '{{ route('qrcode.filter') }}',
+                    'method': 'GET',
+                    'data': {
+
+                        'type': type
+                    },
+                    success: function(data) {
+
+                        $('table tbody').html(data)
+                    },
+                    error: function(xhr) {
+                        console.log("Hata");
+                    }
+                });
+
+            })
+        })
     </script>
 @endsection

@@ -138,4 +138,15 @@ class QRCodeController extends Controller
         $qrCode->delete();
         return redirect()->route("qrcode")->with("success", "Delete QrCode")->with("alert-type", "success");
     }
+
+    public function filter(Request $request)
+    {
+        $type = $request->get("type");
+        if ($type && $type !== 'all') {
+            $qrCodeAll = QRCode::where("type", $type)->get();   //Secilen type
+        } else {
+            $qrCodeAll = QRCode::all();
+        }
+        return view("qrcode::pages.qrcode.partials.table", compact("qrCodeAll"))->render();
+    }
 }
