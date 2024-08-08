@@ -1,5 +1,4 @@
 @section('links')
-
 @endsection
 @extends('components.app')
 @section('content')
@@ -9,15 +8,16 @@
         </div>
         <div class="card mt-4">
             <div class="card-body">
-                <form id="save-qrcode-data-form" action="" method="POST" enctype="multipart/form-data">
+                <form id="save-qrcode-data-form" action="{{ route('qrcode.store') }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="row p-20">
                         <div class="col-lg-9">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="title">Başlık<span class="text-danger">*</span></label>
-                                        <input type="text" name="title" id="title" class="form-control" required>
+                                        <label for="qrTitle">Başlık<span class="text-danger">*</span></label>
+                                        <input type="text" name="qrTitle" id="qrTitle" class="form-control" required>
                                     </div>
                                 </div>
 
@@ -77,7 +77,7 @@
                                     <div class="input-group-append">
                                         <span class="input-group-text height-35 colorpicker-input-addon"
                                             id="foreground-color-addon">
-                                            <i style="background-color: #000000;"></i>
+                                            <i style="foreground_color: #000000;"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -101,10 +101,10 @@
                     </div>
                     <div class="d-flex justify-content-center mt-4">
                         <button type="submit" class="btn btn-primary mr-3">
-                           Kaydet
+                            Kaydet
                         </button>
-                        <a href="{{ route("qrcode") }}" class="btn btn-secondary">
-                          Geri
+                        <a href="{{ route('qrcode') }}" class="btn btn-secondary">
+                            Geri
                         </a>
                     </div>
                 </form>
@@ -139,6 +139,7 @@
                     }
                 });
             });
+
             function displayQrPlaceholder() {
 
                 $('.qr-preview img').addClass('d-none');
@@ -156,7 +157,7 @@
             });
         })
     </script>
-     <script>
+    <script>
         $('body').on('click', '.generate-qr', function($e) {
             generateQr();
         });

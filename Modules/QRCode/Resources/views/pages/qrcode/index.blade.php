@@ -1,5 +1,18 @@
+@section('links')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" />
+@endsection
 @extends('components.app')
 @section('content')
+    <style>
+        .table th img,
+        .jsgrid .jsgrid-table th img,
+        .table td img,
+        .jsgrid .jsgrid-table td img {
+            width: 100px;
+            height: 100px;
+            border-radius: 0;
+        }
+    </style>
     <h5 class="card-title">{{ __('QRCode') }}</h5>
     <div class="select-box d-flex py-2 px-lg-2 px-md-2 px-0 border-right-grey border-right-grey-sm-0">
         <p class="mb-0 pr-3 f-14 text-dark-grey d-flex align-items-center">Tür</p>
@@ -23,22 +36,47 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>İd</th>
+                    <th>QR Code</th>
                     <th>Başlık</th>
                     <th>Türü</th>
-                    <th>Oluşturulma Tarihi</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Veri1</td>
-                    <td>Veri2</td>
-                    <td>Veri3</td>
-                    <td>Veri4</td>
-                </tr>
-
+                @foreach ($qrCodeAll as $qrCode)
+                    <tr>
+                        <td>
+                            <a href="{{ $qrCode->data }}" class="popup-image">
+                                <img src="{{ $qrCode->data }}">
+                            </a>
+                        </td>
+                        <td>{{ $qrCode->title }}</td>
+                        <td>{{ $qrCode->type }}</td>
+                        <td>
+                            <a href="" class="btn btn-warning btn-sm">
+                                <i class="fa fa-edit"></i> Düzenle
+                            </a>
+                            <button class="btn btn-danger btn-sm delete-qr-table-row">
+                                <i class="fa fa-trash"></i> Sil
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
+@endsection
+@section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".popup-image").magnificPopup({
+                type: 'image',
+                gallery: {
+                    enabled: true
+                }
+            })
+
+        })
+    </script>
 @endsection

@@ -7,17 +7,15 @@ use Illuminate\Http\Request;
 use Modules\QRCode\Enums\Type;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
+use Modules\QRCode\Entities\QRCode;
 use Modules\QRCode\Support\QrCodeSupport;
 
 class QRCodeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
     public function index()
     {
-        return view('qrcode::pages.qrcode.index');
+        $qrCodeAll = QRCode::all();
+        return view('qrcode::pages.qrcode.index', compact("qrCodeAll"));
     }
 
     public function create()
@@ -76,14 +74,30 @@ class QRCodeController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
     public function store(Request $request)
     {
-        //
+        $qrCode = QRCode::findOrNew($request->Id);
+        $qrCode->company_id = 1;
+        $qrCode->title = $request->qrTitle;
+        $qrCode->type = $request->type;
+        $qrCode->size = $request->size;
+        $qrCode->margin = $request->margin;
+        $qrCode->foreground_color = $request->foreground_color;
+        $qrCode->background_color = $request->background_color;
+        $qrCode->form_data = $request->except([
+            "_token",
+            "qrTitle",
+            "type",
+            "size",
+            "margin",
+            "foreground_color",
+            "background_color",
+        ]);
+
+        $qr = $this->qrGenerate($request);
+        $qrCode->data = $qr->png()->build()->getDataUri();
+        $qrCode->save();
+        return redirect()->route("qrcode")->with("success", "Added QrCode")->with("alert-type", "success");
     }
 
     /**

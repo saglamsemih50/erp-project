@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
         function () {
             Route::get('fields/{type}', [QRCodeController::class, 'fields'])->name('fields');
             Route::post('preview', [QRCodeController::class, 'preview'])->name('preview');
+            Route::post("store", [QRCodeController::class, "store"])->name('store');
         }
     );
 });
