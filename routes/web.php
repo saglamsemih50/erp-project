@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -37,6 +38,18 @@ Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
     Route::get("purchase", [PurchaseController::class, "index"])->name("purchases");
     Route::get("notice", [NoticeController::class, "index"])->name("notice");
     Route::get("invoice", [InvoiceController::class, "index"])->name("invoice");
+
+
+    //Department
+    Route::group(["prefix" => "department", "as" => "department."], function () {
+        Route::get("/", [DepartmentController::class, "index"])->name("index");
+        Route::get("create", [DepartmentController::class, "create"])->name("create");
+        Route::post("store", [DepartmentController::class, "store"])->name("store");
+        Route::get("{id}/show", [DepartmentController::class, "show"])->name("show");
+        Route::get("{id}/edit", [DepartmentController::class, "edit"])->name("edit");
+        Route::post("{id}/update", [DepartmentController::class, "update"])->name("update");
+        Route::get("{id}/delete", [DepartmentController::class, "delete"])->name("delete");
+    });
 });
 
 Route::get("login", [LoginController::class, "index"])->name("login");

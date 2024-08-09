@@ -125,6 +125,26 @@
                     </a>
                 </li>
                 <li class="nav-item menu-items">
+                    <a class="nav-link" data-toggle="collapse" href="#managementMenu" aria-expanded="false"
+                        aria-controls="managementMenu">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-account-group"></i>
+                        </span>
+                        <span class="menu-title">Yönetim</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="managementMenu">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route("department.index") }}">Departmanlar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">Çalışanlar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item menu-items">
                     <a class="nav-link" href="{{ route('tasks') }}">
                         <span class="menu-icon">
                             <i class="mdi mdi-laptop"></i>
