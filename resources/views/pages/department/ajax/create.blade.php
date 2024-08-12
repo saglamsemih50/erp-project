@@ -14,7 +14,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="department_name">Departman Adı<span class="text-danger">*</span></label>
-                                        <input type="department_name" name="department_name" id="department_name" class="form-control" required>
+                                        <input type="text" name="department_name" id="department_name" class="form-control" required>
                                     </div>
                                 </div>
 

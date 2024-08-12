@@ -15,21 +15,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Veri1</td>
-                    <td style="text-align: right;">
-                        <a href="{{ route('department.show', 1) }}" class="btn btn-info btn-sm">
-                            <i class="fa fa-eye"></i> Show
-                        </a>
-                        <a href=" {{ route('department.edit', 1) }}" class="btn btn-warning btn-sm">
-                            <i class="fa fa-edit"></i> Edit
-                        </a>
-                        <a href="{{ route('department.delete', 1) }}" class="btn btn-danger btn-sm delete-department-table"
-                            data-title="">
-                            <i class="fa fa-trash"></i> Delete
-                        </a>
-                    </td>
-                </tr>
+                @foreach ($departments as $department)
+                    <tr>
+
+                        <td>{{ $department->name }}</td>
+                        <td style="text-align: right;">
+                            <a href="{{ route('department.show', $department->id) }}" class="btn btn-info btn-sm">
+                                <i class="fa fa-eye"></i> Show
+                            </a>
+                            <a href=" {{ route('department.edit', $department->id) }}" class="btn btn-warning btn-sm">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <a href="{{ route('department.delete', $department->id) }}"
+                                class="btn btn-danger btn-sm delete-department-table" data-title="{{ $department->name }}">
+                                <i class="fa fa-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

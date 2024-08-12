@@ -9,14 +9,14 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-md-3 font-weight-bold">Departman İsmi</div>
-                        <div class="col-md-9">Departman verisi</div>
+                        <div class="col-md-9">{{ $department->name }}</div>
                     </div>
                     <div class="d-flex justify-content-end mt-4">
                         <a href="{{ route('department.index') }}" class="btn btn-secondary btn-sm mr-3">
                             Geri Dön
                         </a>
-                        <a href="{{ route('department.delete', 1) }}" class="btn btn-danger btn-sm delete-department-table"
-                            data-title="">
+                        <a href="{{ route('department.delete', $department->id) }}"
+                            class="btn btn-danger btn-sm delete-department-table" data-title="{{ $department->name }}">
                             <i class="fa fa-trash"></i> Delete
                         </a>
                     </div>
@@ -30,7 +30,7 @@
         document.querySelectorAll('.delete-department-table').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 const title = button.getAttribute('data-title');
-                const confirmed = confirm(title + ' Bu öğeyi silmek istediğinize emin misiniz?');
+                const confirmed = confirm(title + '  silmek istediğinize emin misiniz?');
                 if (!confirmed) {
                     event.preventDefault();
                 }
