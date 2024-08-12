@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -49,6 +50,17 @@ Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
         Route::get("{id}/edit", [DepartmentController::class, "edit"])->name("edit");
         Route::post("{id}/update", [DepartmentController::class, "update"])->name("update");
         Route::get("{id}/delete", [DepartmentController::class, "delete"])->name("delete");
+    });
+
+    //Employee
+    Route::group(["prefix" => "employee", "as" => "employee."], function () {
+        Route::get("/", [EmployeeController::class, "index"])->name("index");
+        Route::get("create", [EmployeeController::class, "create"])->name("create");
+        Route::post("store", [EmployeeController::class, "store"])->name("store");
+        Route::get("{id}/show", [EmployeeController::class, "show"])->name("show");
+        Route::get("{id}/edit", [EmployeeController::class, "edit"])->name("edit");
+        Route::post("{id}/update", [EmployeeController::class, "update"])->name("update");
+        Route::get("{id}/delete", [EmployeeController::class, "delete"])->name("delete");
     });
 });
 

@@ -139,7 +139,7 @@
                                 <a class="nav-link" href="{{ route("department.index") }}">Departmanlar</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="">Çalışanlar</a>
+                                <a class="nav-link" href="{{ route("employee.index") }}">Çalışanlar</a>
                             </li>
                         </ul>
                     </div>
