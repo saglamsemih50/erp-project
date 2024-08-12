@@ -6,8 +6,7 @@
         </div>
         <div class="card mt-4">
             <div class="card-body">
-                <form id="save-qrcode-data-form" action="{{ route('employee.store') }}" method="POST"
-                    enctype="multipart/form-data">
+                <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-lg-9">

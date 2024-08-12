@@ -55,9 +55,9 @@
                         <a href="{{ route('employee.index') }}" class="btn btn-secondary btn-sm mr-3">
                             Geri Dön
                         </a>
-                        <a href="{{ route('employee.delete', 1) }}" class="btn btn-danger btn-sm delete-notice-table"
+                        <a href="{{ route('employee.delete', 1) }}" class="btn btn-danger btn-sm delete-employee-table"
                             data-title="">
-                            <i class="fa fa-trash"></i> {{ __('Delete') }}
+                            <i class="fa fa-trash"></i> Delete
                         </a>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
 
 @section('scripts')
     <script>
-        document.querySelectorAll('.delete-notice-table').forEach(function(button) {
+        document.querySelectorAll('.delete-employee-table').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 const title = button.getAttribute('data-title');
                 const confirmed = confirm(title + ' Bu öğeyi silmek istediğinize emin misiniz?');

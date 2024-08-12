@@ -39,6 +39,7 @@ class EmployeeController extends Controller
 
     public function update(Request $request, string $id)
     {
+        dd($request->all());
         return redirect()->route("employee.index")->with("success", "Güncellendi")->with('alert-type', 'success');
     }
 
