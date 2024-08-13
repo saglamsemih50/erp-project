@@ -6,7 +6,8 @@
         </div>
         <div class="card mt-4">
             <div class="card-body">
-                <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="save-qrcode-data-form" action="{{ route('employee.store') }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-lg-9">
@@ -44,9 +45,10 @@
                                         <select name="departman" id="departman" class="form-control" data-live-search="true"
                                             required>
                                             <option value="">Seçiniz</option>
-                                            <option value="İnsan Kaynakları">İnsan Kaynakları</option>
-                                            <option value="Yazılımcılar">Yazılımcılar</option>
-                                            <option value="Temizlikçi">Temizlikçi</option>
+                                            @foreach ($departments as $department)
+                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                            @endforeach
+
                                         </select>
                                     </div>
                                 </div>
@@ -105,7 +107,7 @@
                                 <label for="date_of_birth">Doğum Tarihi<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control datepicker" id="date_of_birth"
                                     name="date_of_birth"
-                                    value="{{ isset($formFields['date_of_birth']) ? \Carbon\Carbon::parse($formFields['date_of_birth'])->format(config('app.date_format')) : \Carbon\Carbon::now()->format(config('app.date_format')) }}"
+                                    value="{{ isset($employee->date_of_birth) ? \Carbon\Carbon::parse($employee->date_of_birth)->format(config('app.date_format')) : \Carbon\Carbon::now()->format(config('app.date_format')) }}"
                                     required>
                             </div>
                         </div>
@@ -115,8 +117,10 @@
                                 <select name="gender" id="gender" class="form-control" data-live-search="true"
                                     required>
                                     <option value="">Seçiniz</option>
-                                    <option value="Erkek">Erkek</option>
-                                    <option value="Kadın">Kadın</option>
+                                    @foreach ($genders as $gender)
+                                        <option @selected($gender->value == 'text') value="{{ $gender->value }}">
+                                            {{ $gender->label() }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -125,7 +129,7 @@
                                 <label for="joining_date">Katılma Tarihi<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control datepicker" id="joining_date"
                                     name="joining_date"
-                                    value="{{ isset($formFields['joining_date']) ? \Carbon\Carbon::parse($formFields['joining_date'])->format(config('app.date_format')) : \Carbon\Carbon::now()->format(config('app.date_format')) }}"
+                                    value="{{ isset($employee->joining_date) ? \Carbon\Carbon::parse($employee->joining_date)->format(config('app.date_format')) : \Carbon\Carbon::now()->format(config('app.date_format')) }}"
                                     required>
                             </div>
                         </div>
@@ -135,9 +139,10 @@
                                 <select name="martial_status" id="martial_status" class="form-control"
                                     data-live-search="true" required>
                                     <option value="">Seçiniz</option>
-                                    <option value="Evli">Evli</option>
-                                    <option value="Bekar">Bekar</option>
-                                    <option value="Nişanlı">Nişanlı</option>
+                                    @foreach ($martialStatus as $martial)
+                                        <option @selected($martial->value == 'text') value="{{ $martial->value }}">
+                                            {{ $martial->label() }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -166,7 +171,9 @@
             </form>
         </div>
     </div>
+    </div>
 @endsection
+
 @section('scripts')
     <script>
         function previewImage(event) {
@@ -181,6 +188,7 @@
             reader.readAsDataURL(event.target.files[0]);
         }
     </script>
+
     <script>
         document.querySelector('.toggle-password').addEventListener('click', function(e) {
             const passwordInput = document.getElementById('password');
@@ -189,9 +197,10 @@
             this.querySelector('i').className = type === 'password' ? 'fa fa-eye' : 'fa fa-eye-slash';
         });
     </script>
+
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#date_of_birth,#joining_date').datepicker({
+            $('#date_of_birth, #joining_date').datepicker({
                 format: 'dd-mm-yyyy',
                 autoclose: true,
                 todayHighlight: true
