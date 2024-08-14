@@ -23,5 +23,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
         Route::get("{id}/edit", [NoticeBoardController::class, "edit"])->name("edit");
         Route::post("{id}/update", [NoticeBoardController::class, "update"])->name("update");
         Route::get("{id}/delete", [NoticeBoardController::class, "delete"])->name("delete");
+        Route::get("fetch-employees", [NoticeBoardController::class,"getEmployeesByDepartment"])->name("employees.fetch");
     });
 });
