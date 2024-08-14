@@ -11,29 +11,34 @@
             <thead>
                 <tr>
                     <th>Departman</th>
-                    <th>Çalışan</th>
-                    <th>Tarih</th>
+                    <th>Konu</th>
+                    <th>İçerik</th>
+                    <th>Oluşturulma Zamanı</th>
                     <th>İşlem</th>
+
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Veri1</td>
-                    <td>Veri2</td>
-                    <td>Veri3</td>
-                    <td>
-                        <a href="{{ route('notice.show', 1) }}" class="btn btn-info btn-sm">
-                            <i class="fa fa-eye"></i> Show
-                        </a>
-                        <a href=" {{ route('notice.edit', 1) }}" class="btn btn-warning btn-sm">
-                            <i class="fa fa-edit"></i> Edit
-                        </a>
-                        <a href="{{ route('notice.delete', 1) }}" class="btn btn-danger btn-sm delete-notice-table"
-                            data-title="">
-                            <i class="fa fa-trash"></i> Delete
-                        </a>
-                    </td>
-                </tr>
+                @foreach ($notices as $notice)
+                    <tr>
+                        <td>{{ $notice->department->name ?? 'Departman Yok' }}</td>
+                        <td>{{ $notice->title }}</td>
+                        <td>{{ $notice->description }}</td>
+                        <td>{{ $notice->created_at }}</td>
+                        <td>
+                            <a href="{{ route('notice.show', $notice->id) }}" class="btn btn-info btn-sm">
+                                <i class="fa fa-eye"></i> Show
+                            </a>
+                            <a href=" {{ route('notice.edit', $notice->id) }}" class="btn btn-warning btn-sm">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <a href="{{ route('notice.delete', $notice->id) }}"
+                                class="btn btn-danger btn-sm delete-notice-table" data-title="{{ $notice->title }}">
+                                <i class="fa fa-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -45,7 +50,7 @@
         document.querySelectorAll('.delete-notice-table').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 const title = button.getAttribute('data-title');
-                const confirmed = confirm(title + ' Bu öğeyi silmek istediğinize emin misiniz?');
+                const confirmed = confirm(title + '  silmek istediğinize emin misiniz?');
                 if (!confirmed) {
                     event.preventDefault();
                 }

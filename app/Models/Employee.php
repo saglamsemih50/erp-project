@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Modules\NoticeBoard\Entities\NoticeBoard;
 
 class Employee extends Model
 {
@@ -34,5 +35,9 @@ class Employee extends Model
     public function user()
     {
         return $this->belongsTo(User::class, "user_id");
+    }
+    public function notices()
+    {
+        return $this->belongsToMany(NoticeBoard::class, 'employee_notice', 'employee_id', 'notice_id');
     }
 }
