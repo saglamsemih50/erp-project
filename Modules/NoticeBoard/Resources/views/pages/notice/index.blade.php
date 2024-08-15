@@ -1,5 +1,13 @@
 @extends('components.app')
 @section('content')
+    @if (session('message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="show-message">
+            {{ session('message') }}
+        </div>
+        @php
+            session()->forget('message');
+        @endphp
+    @endif
     <h5 class="card-title">Duyuru Panosu</h5>
     <div class="content-wrapper">
         <div class="d-block d-lg-flex d-md-flex justify-content-between">
@@ -15,7 +23,6 @@
                     <th>İçerik</th>
                     <th>Oluşturulma Zamanı</th>
                     <th>İşlem</th>
-
                 </tr>
             </thead>
             <tbody>
@@ -44,7 +51,6 @@
     </div>
 @endsection
 
-
 @section('scripts')
     <script>
         document.querySelectorAll('.delete-notice-table').forEach(function(button) {
@@ -55,6 +61,21 @@
                     event.preventDefault();
                 }
             });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var showMessage = document.getElementById('show-message');
+            if (showMessage) {
+                setTimeout(function() {
+                    showMessage.classList.remove('show');
+                    showMessage.classList.add('fade');
+                    setTimeout(function() {
+                        showMessage.remove();
+                    },500);
+                },5000);
+            }
         });
     </script>
 @endsection

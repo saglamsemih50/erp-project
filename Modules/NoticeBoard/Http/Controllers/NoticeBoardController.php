@@ -39,9 +39,12 @@ class NoticeBoardController extends Controller
         if (!empty($employees)) {
             $notices->employee()->attach($employees);
         }
-        return redirect()->route("notice")->with("succes", "Veri Tabanına Başarıyla kaydedildi")->with('alert-type', 'success');
+        $employeeNames = Employee::whereIn('id', $employees)->pluck('name')->toArray();
+        $employeeNamesString = implode(', ', $employeeNames);
+        $message = $notices->title . ' konulu bildirim başarılı bir şekilde ';
+        $message .= (count($employeeNames) === 1) ? $employeeNamesString . ' isimli çalışanına gönderildi' : $employeeNamesString . ' isimli çalışanlarına gönderildi';
+        return redirect()->route("notice")->with("succes", "Veri Tabanına Başarıyla kaydedildi")->with('alert-type', 'success')->with('message', $message);
     }
-
 
     public function show($id)
     {
