@@ -160,7 +160,7 @@
                                 <a class="nav-link" href="{{ route('task-category.index') }}">Görev Kategorisi</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="">Görevler</a>
+                                <a class="nav-link" href="{{ route('tasks.index') }}">Görevler</a>
                             </li>
                         </ul>
                     </div>

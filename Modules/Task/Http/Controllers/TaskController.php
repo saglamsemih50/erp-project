@@ -2,78 +2,59 @@
 
 namespace Modules\Task\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
+use App\Models\Department;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
+
     public function index()
     {
-        return view('task::index');
+        return view('task::pages.tasks.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
     public function create()
     {
-        return view('task::create');
+
+        $departments = Department::all();
+        return view('task::pages.tasks.ajax.create', compact("departments"));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+        return redirect()->route('tasks.index')->with('success', 'Veri Tabanına Kaydedildi')->with('alert-type', 'success');
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
+
     public function show($id)
     {
-        return view('task::show');
+        return view('task::pages.tasks.ajax.show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function edit($id)
     {
-        return view('task::edit');
+        $departments = Department::all();
+        return view('task::pages.tasks.ajax.edit', compact("departments"));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
+
+        return redirect()->route("tasks.index")->with("success", "Güncellendi")->with('alert-type', 'success');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        return redirect()->route("tasks.index")->with("success", "Delete Task")->with("alert-type", "success");
+    }
+    public function getEmployeesByDepartment(Request $request)
+    {
+        $departmentId = $request->department_id;
+        $employees = Employee::where('departman_id', $departmentId)->get(['id', 'name']);
+        return response()->json(['employees' => $employees]);
     }
 }
