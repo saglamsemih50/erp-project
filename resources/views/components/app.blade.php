@@ -136,23 +136,34 @@
                     <div class="collapse" id="managementMenu">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route("department.index") }}">Departmanlar</a>
+                                <a class="nav-link" href="{{ route('department.index') }}">Departmanlar</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route("employee.index") }}">Çalışanlar</a>
+                                <a class="nav-link" href="{{ route('employee.index') }}">Çalışanlar</a>
                             </li>
                         </ul>
                     </div>
                 </li>
+
                 <li class="nav-item menu-items">
-                    <a class="nav-link" href="{{ route('tasks') }}">
+                    <a class="nav-link" data-toggle="collapse" href="#managementTask" aria-expanded="false"
+                        aria-controls="managementTask">
                         <span class="menu-icon">
-                            <i class="mdi mdi-laptop"></i>
+                            <i class="mdi mdi-account-group"></i>
                         </span>
-                        <span class="menu-title">Görevler</span>
-
+                        <span class="menu-title">Görev Yönetimi</span>
+                        <i class="menu-arrow"></i>
                     </a>
-
+                    <div class="collapse" id="managementTask">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('task-category.index') }}">Görev Kategorisi</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">Görevler</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="{{ route('notice') }}">

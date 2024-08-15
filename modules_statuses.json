@@ -1,4 +1,5 @@
 {
     "QRCode": true,
-    "NoticeBoard": true
+    "NoticeBoard": true,
+    "Task": true
 }
