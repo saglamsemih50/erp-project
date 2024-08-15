@@ -6,7 +6,7 @@
         </div>
         <div class="card mt-4 col-lg-9">
             <div class="card-body ">
-                <form action="{{ route('task-category.store',1) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('task-category.update', $taskCategory->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row p-20">
                         <div class="col-lg-12">
@@ -16,7 +16,7 @@
                                         <label for="category_name">Görev Kategorisi<span
                                                 class="text-danger">*</span></label>
                                         <input type="text" name="category_name" id="category_name" class="form-control"
-                                            value="" required>
+                                            value="{{ $taskCategory->category_name }}" required>
                                     </div>
                                 </div>
 

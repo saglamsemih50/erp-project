@@ -9,14 +9,15 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-md-3 font-weight-bold">Görev Kategorisi</div>
-                        <div class="col-md-9">Lorem, ipsum dolor.</div>
+                        <div class="col-md-9">{{ $taskCategory->category_name }}</div>
                     </div>
                     <div class="d-flex justify-content-end mt-4">
                         <a href="{{ route('task-category.index') }}" class="btn btn-secondary btn-sm mr-3">
                             Geri Dön
                         </a>
-                        <a href="{{ route('task-category.delete', 1) }}"
-                            class="btn btn-danger btn-sm delete-task_category-table" data-title="1">
+                        <a href="{{ route('task-category.delete', $taskCategory->id) }}"
+                            class="btn btn-danger btn-sm delete-task_category-table"
+                            data-title="{{ $taskCategory->category_name}}">
                             <i class="fa fa-trash"></i> Delete
                         </a>
                     </div>
@@ -31,7 +32,7 @@
         document.querySelectorAll('.delete-task_category-table').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 const title = button.getAttribute('data-title');
-                const confirmed = confirm(title + ' Bu öğeyi silmek istediğinize emin misiniz?');
+                const confirmed = confirm(title + ' silmek istediğinize emin misiniz?');
                 if (!confirmed) {
                     event.preventDefault();
                 }

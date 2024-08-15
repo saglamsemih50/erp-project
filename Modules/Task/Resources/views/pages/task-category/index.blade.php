@@ -15,21 +15,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Lorem, ipsum.</td>
-                    <td style="text-align: right;">
-                        <a href="{{ route('task-category.show', 1) }}" class="btn btn-info btn-sm">
-                            <i class="fa fa-eye"></i> Show
-                        </a>
-                        <a href=" {{ route('task-category.edit', 1) }}" class="btn btn-warning btn-sm">
-                            <i class="fa fa-edit"></i> Edit
-                        </a>
-                        <a href="{{ route('task-category.delete', 1) }}"
-                            class="btn btn-danger btn-sm delete-task_category-table" data-title="1">
-                            <i class="fa fa-trash"></i> Delete
-                        </a>
-                    </td>
-                </tr>
+                @foreach ($taskCategories as $taskCategory)
+                    <tr>
+                        <td>{{ $taskCategory->category_name }}</td>
+                        <td style="text-align: right;">
+                            <a href="{{ route('task-category.show', $taskCategory->id) }}" class="btn btn-info btn-sm">
+                                <i class="fa fa-eye"></i> Show
+                            </a>
+                            <a href=" {{ route('task-category.edit', $taskCategory->id) }}" class="btn btn-warning btn-sm">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <a href="{{ route('task-category.delete', $taskCategory->id) }}"
+                                class="btn btn-danger btn-sm delete-task_category-table"
+                                data-title="{{ $taskCategory->category_name }}">
+                                <i class="fa fa-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -41,7 +44,7 @@
         document.querySelectorAll('.delete-task_category-table').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 const title = button.getAttribute('data-title');
-                const confirmed = confirm(title + ' Bu öğeyi silmek istediğinize emin misiniz?');
+                const confirmed = confirm(title + ' silmek istediğinize emin misiniz?');
                 if (!confirmed) {
                     event.preventDefault();
                 }
