@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Task\Entities\Task;
 use Modules\Task\Entities\TaskCategory;
+use Modules\Task\Enums\Status;
 
 class TaskController extends Controller
 {
@@ -53,21 +54,39 @@ class TaskController extends Controller
     public function edit($id)
     {
 
+        $categories = TaskCategory::all();
+        $task = Task::with('taskCategory', 'employees', 'department')->findOrFail($id);
         $departments = Department::all();
-        return view('task::pages.tasks.ajax.edit', compact("departments"));
-    }
+        $departmentId = $task->department_id;
+        $employees = Employee::where('departman_id', $departmentId)->get();
+        $statuses = Status::cases();
 
+        return view('task::pages.tasks.ajax.edit', compact("departments", "task", "categories", "employees", "statuses"));
+    }
     public function update(Request $request, $id)
     {
-        dd($request->all());
-
+        $task = Task::findOrNew($request->id);
+        $task->company_id = 1;
+        $task->user_id = 3;
+        $task->department_id = $request->department_id;
+        $employees = $request->employee_id;
+        $task->title = $request->title;
+        $task->description = $request->description;
+        $task->start_date = parseDateOrNull($request->start_date);
+        $task->end_date = parseDateOrNull($request->end_date);
+        $task->task_category_id = $request->task_category_id;
+        $task->status = $request->status;
+        $task->save();
+        if (!empty($employees)) {
+            $task->employees()->sync($employees);
+        }
         return redirect()->route("tasks.index")->with("success", "Güncellendi")->with('alert-type', 'success');
     }
 
     public function delete($id)
     {
         $task = Task::findOrFail($id);
-        dd($task);
+        $task->delete();
         return redirect()->route("tasks.index")->with("success", "Delete Task")->with("alert-type", "success");
     }
     public function getEmployeesByDepartment(Request $request)

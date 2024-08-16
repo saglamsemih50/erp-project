@@ -10,7 +10,7 @@
         </div>
         <div class="card mt-4">
             <div class="card-body">
-                <form action="{{ route('tasks.update', 1) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('tasks.update', $task->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row p-20">
                         <div class="col-lg-12">
@@ -18,7 +18,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="title">Görev<span class="text-danger">*</span></label>
-                                        <input type="text" name="title" id="title" class="form-control" required>
+                                        <input type="text" name="title" id="title" class="form-control"
+                                            value="{{ $task->title }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -27,9 +28,12 @@
                                         <select name="task_category_id" id="task_category_id"
                                             class="form-control selectpicker" data-live-search="true">
                                             <option value="">Seçiniz</option>
-                                            <option value="GörevKategori">GörevKategori</option>
-                                            <option value="GörevKategori2">GörevKategori2</option>
-                                            <option value="GörevKategori3">GörevKategori3</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ $category->id == $task->task_category_id ? 'selected' : '' }}>
+                                                    {{ $category->category_name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -38,25 +42,29 @@
                                         <label for="start_date">Başlangıç Tarihi<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control datepicker" id="start_date"
                                             name="start_date"
-                                            value="{{ \Carbon\Carbon::now()->format(config('app.date_format')) }}" required>
+                                            value="{{ isset($task->start_date) ? \Carbon\Carbon::parse($task->start_date)->format(config('app.date_format')) : \Carbon\Carbon::now()->format(config('app.date_format')) }}"
+                                            required>
+
                                     </div>
                                 </div>
-
                                 <div class="col-lg-3 col-md-6">
                                     <div class="form-group">
                                         <label for="end_date">Bitiş Tarihi<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control datepicker" id="end_date" name="end_date"
-                                            value="{{ \Carbon\Carbon::now()->format(config('app.date_format')) }}" required>
+                                            value="{{ isset($task->end_date) ? \Carbon\Carbon::parse($task->end_date)->format(config('app.date_format')) : \Carbon\Carbon::now()->format(config('app.date_format')) }}"
+                                            required>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="departman_id">Departman<span class="text-danger">*</span></label>
-                                        <select name="departman_id" id="task_type" class="form-control selectpicker"
+                                        <label for="department_id">Departman<span class="text-danger">*</span></label>
+                                        <select name="department_id" id="task_type" class="form-control selectpicker"
                                             data-live-search="true" required>
                                             <option value="">Seçiniz</option>
                                             @foreach ($departments as $department)
-                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                                <option value="{{ $department->id }}"
+                                                    {{ $department->id == $task->department_id ? 'Selected' : '' }}>
+                                                    {{ $department->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -66,11 +74,17 @@
                                     <div class="form-group">
                                         <label for="employee_id">Çalışan<span class="text-danger">*</span></label>
                                         <select id="employee_id" data-live-search="true" multiple name="employee_id[]"
-                                            class="form-control " data-live-search="true" required>
-                                            <option value=""></option>
+                                            class="form-control selectpicker" data-live-search="true" required>
+                                            @foreach ($employees as $employee)
+                                                <option value="{{ $employee->id }}"
+                                                    {{ $task->employees->contains($employee->id) ? 'selected' : '' }}>
+                                                    {{ $employee->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -78,9 +92,10 @@
                                 <label for="status">Görev Durumu</label>
                                 <select name="status" id="status" class="form-control selectpicker"
                                     data-live-search="true">
-                                    <option value="">Seçiniz</option>
-                                    <option value="Tamamlanmadı">Tamamlanmadı</option>
-                                    <option value="Tamamlandı">Tamamlandı</option>
+                                    @foreach ($statuses as $status)
+                                        <option @selected($status->value == 'text') value="{{ $status->value }}">
+                                            {{ $status->label() }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -92,7 +107,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label for="description">Görev Açıklaması</label>
-                                <textarea id="description" name="description" class="form-control"></textarea>
+                                <textarea id="description" name="description" class="form-control">{{ $task->description }}</textarea>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end mt-4">
@@ -124,18 +139,18 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#taskOption').hide();
             $('#task_type').change(function() {
                 var departmentId = $(this).val();
                 if (departmentId) {
                     $.ajax({
-                        url: '{{ route('tasks.employees.fetch') }}'
+                        url: '{{ route('tasks.employees.fetch') }}',
                         method: 'GET',
                         data: {
                             department_id: departmentId
                         },
                         success: function(response) {
                             console.log(response);
+
                             var options = '';
                             if (response.employees.length > 0) {
 
