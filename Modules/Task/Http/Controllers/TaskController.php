@@ -6,36 +6,53 @@ use App\Models\Department;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Task\Entities\Task;
+use Modules\Task\Entities\TaskCategory;
 
 class TaskController extends Controller
 {
 
     public function index()
     {
-        return view('task::pages.tasks.index');
+        $tasks = Task::with('employees')->get();
+        return view('task::pages.tasks.index', compact('tasks'));
     }
 
     public function create()
     {
-
         $departments = Department::all();
-        return view('task::pages.tasks.ajax.create', compact("departments"));
+        $taskCategories = TaskCategory::all();
+        return view('task::pages.tasks.ajax.create', compact("departments", "taskCategories"));
     }
 
     public function store(Request $request)
     {
-        dd($request->all());
+        $task = Task::findOrNew($request->id);
+        $task->company_id = 1;
+        $task->user_id = 3;
+        $task->department_id = $request->department_id;
+        $employees = $request->employee_id;
+        $task->title = $request->title;
+        $task->description = $request->description;
+        $task->start_date = parseDateOrNull($request->start_date);
+        $task->end_date = parseDateOrNull($request->end_date);
+        $task->task_category_id = $request->task_category_id;
+        $task->save();
+        if (!empty($employees)) {
+            $task->employees()->attach($employees);
+        }
         return redirect()->route('tasks.index')->with('success', 'Veri Tabanına Kaydedildi')->with('alert-type', 'success');
     }
 
-
     public function show($id)
     {
-        return view('task::pages.tasks.ajax.show');
+        $task = Task::with('employees', 'user', 'taskCategory')->findOrFail($id);
+        return view('task::pages.tasks.ajax.show', compact('task'));
     }
 
     public function edit($id)
     {
+
         $departments = Department::all();
         return view('task::pages.tasks.ajax.edit', compact("departments"));
     }
@@ -49,6 +66,8 @@ class TaskController extends Controller
 
     public function delete($id)
     {
+        $task = Task::findOrFail($id);
+        dd($task);
         return redirect()->route("tasks.index")->with("success", "Delete Task")->with("alert-type", "success");
     }
     public function getEmployeesByDepartment(Request $request)

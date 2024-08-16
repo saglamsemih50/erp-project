@@ -40,4 +40,8 @@ class Employee extends Model
     {
         return $this->belongsToMany(NoticeBoard::class, 'employee_notice', 'employee_id', 'notice_id');
     }
+    public function tasks()
+    {
+        return $this->belongsToMany(NoticeBoard::class, 'employee_task', 'employee_id', 'task_id');
+    }
 }

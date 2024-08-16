@@ -20,25 +20,33 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>task</td>
-                    <td>Mehmet</td>
-                    <td>08/2024</td>
-                    <td>09/2024</td>
-                    <td>TamamlandıOrTamamlanmadı</td>
-                    <td>
-                        <a href="{{ route('tasks.show', 1) }}" class="btn btn-info btn-sm">
-                            <i class="fa fa-eye"></i> Show
-                        </a>
-                        <a href=" {{ route('tasks.edit', 1) }}" class="btn btn-warning btn-sm">
-                            <i class="fa fa-edit"></i> Edit
-                        </a>
-                        <a href="{{ route('tasks.delete', 1) }}" class="btn btn-danger btn-sm delete-notice-table"
-                            data-title="">
-                            <i class="fa fa-trash"></i> Delete
-                        </a>
-                    </td>
-                </tr>
+                @foreach ($tasks as $task)
+                    <tr>
+                        <td>{{ $task->title }}</td>
+                        <td>
+                            @foreach ($task->employees as $employee)
+                                {{ $employee->name }}@if (!$loop->last)
+                                    ,
+                                @endif
+                            @endforeach
+                        </td>
+                        <td>{{ $task->start_date }}</td>
+                        <td>{{ $task->end_date }}</td>
+                        <td>{{ $task->status }}</td>
+                        <td>
+                            <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-info btn-sm">
+                                <i class="fa fa-eye"></i> Show
+                            </a>
+                            <a href=" {{ route('tasks.edit', $task->id) }}" class="btn btn-warning btn-sm">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <a href="{{ route('tasks.delete', $task->id) }}"
+                                class="btn btn-danger btn-sm delete-notice-table" data-title="{{ $task->title }}">
+                                <i class="fa fa-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -50,7 +58,7 @@
         document.querySelectorAll('.delete-notice-table').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 const title = button.getAttribute('data-title');
-                const confirmed = confirm(title + ' Bu öğeyi silmek istediğinize emin misiniz?');
+                const confirmed = confirm(title + ' silmek istediğinize emin misiniz?');
                 if (!confirmed) {
                     event.preventDefault();
                 }

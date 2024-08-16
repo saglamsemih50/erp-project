@@ -9,43 +9,49 @@
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-md-3 font-weight-bold">Görev Kategorisi</div>
-                        <div class="col-md-9"> Lorem, ipsum dolor.</div>
+                        <div class="col-md-9"> {{ $task->taskCategory->category_name }}</div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-3 font-weight-bold">Görev</div>
-                        <div class="col-md-9">Lorem, ipsum dolor.</div>
+                        <div class="col-md-9">{{ $task->title }}</div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-3 font-weight-bold">Atandı</div>
-                        <div class="col-md-9">Mehmet ahmet</div>
+                        <div class="col-md-9">
+                            @foreach ($task->employees as $employee)
+                                {{ $employee->name }}@if (!$loop->last)
+                                    ,
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-3 font-weight-bold">Atayan</div>
-                        <div class="col-md-9">Semih</div>
+                        <div class="col-md-9">{{ $task->user->name }}</div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-3 font-weight-bold">Başlama Tarihi</div>
-                        <div class="col-md-9">12/05/2024</div>
+                        <div class="col-md-9">{{ $task->start_date }}</div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-3 font-weight-bold">Bitiş Tarihi</div>
-                        <div class="col-md-9">12/05/2024</div>
+                        <div class="col-md-9">{{ $task->end_date }}</div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-3 font-weight-bold">Açıklama</div>
-                        <div class="col-md-9">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                        <div class="col-md-9">{{ $task->description }}</div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-3 font-weight-bold">Durumu</div>
-                        <div class="col-md-9">Tamamlanmadı</div>
+                        <div class="col-md-9">{{ $task->status }}</div>
                     </div>
 
                     <div class="d-flex justify-content-end mt-4">
                         <a href="{{ route('tasks.index') }}" class="btn btn-secondary btn-sm mr-3">
                             Geri Dön
                         </a>
-                        <a href="{{ route('tasks.delete', 1) }}" class="btn btn-danger btn-sm delete-task-table"
-                            data-title="">
+                        <a href="{{ route('tasks.delete', $task->id) }}" class="btn btn-danger btn-sm delete-task-table"
+                            data-title="{{ $task->title }}">
                             <i class="fa fa-trash"></i> Sil
                         </a>
                     </div>
@@ -60,7 +66,7 @@
         document.querySelectorAll('.delete-task-table').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 const title = button.getAttribute('data-title');
-                const confirmed = confirm(title + ' Bu öğeyi silmek istediğinize emin misiniz?');
+                const confirmed = confirm(title + ' silmek istediğinize emin misiniz?');
                 if (!confirmed) {
                     event.preventDefault();
                 }

@@ -27,9 +27,10 @@
                                         <select name="task_category_id" id="task_category_id"
                                             class="form-control selectpicker" data-live-search="true">
                                             <option value="">Seçiniz</option>
-                                            <option value="GörevKategori">GörevKategori</option>
-                                            <option value="GörevKategori2">GörevKategori2</option>
-                                            <option value="GörevKategori3">GörevKategori3</option>
+                                            @foreach ($taskCategories as $taskCategory)
+                                                <option value="{{ $taskCategory->id }}">{{ $taskCategory->category_name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -51,8 +52,8 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label for="departman_id">Departman<span class="text-danger">*</span></label>
-                                        <select name="departman_id" id="task_type" class="form-control selectpicker"
+                                        <label for="department_id">Departman<span class="text-danger">*</span></label>
+                                        <select name="department_id" id="task_type" class="form-control selectpicker"
                                             data-live-search="true" required>
                                             <option value="">Seçiniz</option>
                                             @foreach ($departments as $department)
