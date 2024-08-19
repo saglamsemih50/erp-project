@@ -9,14 +9,23 @@ if (!function_exists('get_countries')) {
         return Country::all();
     }
 }
+
+
 //Is date null
 if (!function_exists('parseDateOrNull')) {
-    function parseDateOrNull($dateString, $format = 'd-m-Y')
+    function parseDateOrNull($dateString,  $currentValue = null, $format = 'd-m-Y', $defaultDay = true)
     {
         try {
-            return $dateString ? Carbon::createFromFormat($format, $dateString)->format('Y-m-d') : null;
+            if ($dateString) {
+
+                return Carbon::createFromFormat($format, $dateString)->format('Y-m-d');
+            }
+            if ($defaultDay) {
+                return Carbon::now()->format('Y-m-d');
+            }
+            return $currentValue;
         } catch (\Exception $e) {
-            return null;
+            return $currentValue ?? ($defaultDay ? Carbon::now()->format('Y-m-d') : null);
         }
     }
 }

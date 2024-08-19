@@ -40,8 +40,8 @@ class EmployeeController extends Controller
         $employee->country = $request->country;
         $employee->mobile = $request->mobile;
         $employee->gender = $request->gender;
-        $employee->date_of_birth = parseDateOrNull($request->date_of_birth);
-        $employee->joining_date = parseDateOrNull($request->joining_date);
+        $employee->date_of_birth = parseDateOrNull($request->date_of_birth, $employee->date_of_birth, 'd-m-Y', false);
+        $employee->joining_date = parseDateOrNull($request->joining_date, $employee->joining_date, 'd-m-Y', false);
         $employee->martial_status = $request->martial_status;
         $employee->about = $request->about;
         $employee->address = $request->address;
@@ -89,8 +89,8 @@ class EmployeeController extends Controller
         $employee->country = $request->country;
         $employee->mobile = $request->mobile;
         $employee->gender = $request->gender;
-        $employee->date_of_birth = parseDateOrNull($request->date_of_birth);
-        $employee->joining_date = parseDateOrNull($request->joining_date);
+        $employee->date_of_birth = parseDateOrNull($request->date_of_birth, $employee->date_of_birth, 'd-m-Y', false);
+        $employee->joining_date = parseDateOrNull($request->joining_date, $employee->joining_date, 'd-m-Y', false);
         $employee->martial_status = $request->martial_status;
         $employee->about = $request->about;
         $employee->address = $request->address;

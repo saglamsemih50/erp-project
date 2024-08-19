@@ -35,8 +35,8 @@ class TaskController extends Controller
         $employees = $request->employee_id;
         $task->title = $request->title;
         $task->description = $request->description;
-        $task->start_date = parseDateOrNull($request->start_date);
-        $task->end_date = parseDateOrNull($request->end_date);
+        $task->start_date = parseDateOrNull($request->start_date, $task->start_date, 'd-m-Y', true);
+        $task->end_date = parseDateOrNull($request->end_date, $task->end_date, 'd-m-Y', true);
         $task->task_category_id = $request->task_category_id;
         $task->save();
         if (!empty($employees)) {
@@ -72,8 +72,8 @@ class TaskController extends Controller
         $employees = $request->employee_id;
         $task->title = $request->title;
         $task->description = $request->description;
-        $task->start_date = parseDateOrNull($request->start_date);
-        $task->end_date = parseDateOrNull($request->end_date);
+        $task->start_date = parseDateOrNull($request->start_date, null, 'd-m-Y', true);
+        $task->end_date = parseDateOrNull($request->end_date, null, 'd-m-Y', true);
         $task->task_category_id = $request->task_category_id;
         $task->status = $request->status;
         $task->save();

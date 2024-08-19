@@ -118,8 +118,8 @@
                                 <label for="date_of_birth">Doğum Tarihi<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control datepicker" id="date_of_birth"
                                     name="date_of_birth"
-                                    value="{{ isset($employee->date_of_birth) ? \Carbon\Carbon::parse($employee->date_of_birth)->format(config('app.date_format')) : \Carbon\Carbon::now()->format(config('app.date_format')) }}"
-                                    required>
+                                    value="{{ isset($employee->date_of_birth) ? \Carbon\Carbon::parse($employee->date_of_birth)->format(config('app.date_format')) : '' }}"
+                                    placeholder="{{ \Carbon\Carbon::now()->format(config('app.date_format')) }}">
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6">
@@ -140,8 +140,8 @@
                                 <label for="joining_date">Katılma Tarihi<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control datepicker" id="joining_date"
                                     name="joining_date"
-                                    value="{{ isset($employee->joining_date) ? \Carbon\Carbon::parse($employee->joining_date)->format(config('app.date_format')) : \Carbon\Carbon::now()->format(config('app.date_format')) }}"
-                                    required>
+                                    value="{{ isset($employee->joining_date) ? \Carbon\Carbon::parse($employee->joining_date)->format(config('app.date_format')) : '' }}"
+                                    placeholder="{{ \Carbon\Carbon::now()->format(config('app.date_format')) }}">
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-6">

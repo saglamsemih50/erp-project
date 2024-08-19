@@ -42,8 +42,7 @@
                                         <label for="start_date">Başlangıç Tarihi<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control datepicker" id="start_date"
                                             name="start_date"
-                                            value="{{ isset($task->start_date) ? \Carbon\Carbon::parse($task->start_date)->format(config('app.date_format')) : \Carbon\Carbon::now()->format(config('app.date_format')) }}"
-                                            required>
+                                            value="{{ isset($task->start_date) ? \Carbon\Carbon::parse($task->start_date)->format(config('app.date_format')) : '' }}"placeholder="{{ \Carbon\Carbon::now()->format(config('app.date_format')) }}">
 
                                     </div>
                                 </div>
@@ -51,8 +50,7 @@
                                     <div class="form-group">
                                         <label for="end_date">Bitiş Tarihi<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control datepicker" id="end_date" name="end_date"
-                                            value="{{ isset($task->end_date) ? \Carbon\Carbon::parse($task->end_date)->format(config('app.date_format')) : \Carbon\Carbon::now()->format(config('app.date_format')) }}"
-                                            required>
+                                            value="{{ isset($task->end_date) ? \Carbon\Carbon::parse($task->end_date)->format(config('app.date_format')) : '' }}"placeholder="{{ \Carbon\Carbon::now()->format(config('app.date_format')) }}">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
