@@ -174,21 +174,22 @@
                     </a>
                 </li>
                 <li class="nav-item menu-items">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                        aria-controls="ui-basic">
+                    <a class="nav-link" data-toggle="collapse" href="#purhcasemanagment" aria-expanded="false"
+                        aria-controls="purhcasemanagment">
                         <span class="menu-icon">
                             <i class="mdi mdi-table-large"></i>
                         </span>
                         <span class="menu-title">Tedarikçiler</span>
                         <i class="menu-arrow"></i>
                     </a>
-                    <div class="collapse" id="ui-basic">
+                    <div class="collapse" id="purhcasemanagment">
                         <ul class="nav flex-column sub-menu">
 
-                            <li class="nav-item"> <a class="nav-link" href="{{ route('purchases') }}">Tedarikçi.</a>
+                            <li class="nav-item"> <a class="nav-link"
+                                    href="{{ route('vendors.index') }}">Tedarikçi.</a>
                             </li>
-                            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Lorem,
-                                    ipsum.</a></li>
+                            <li class="nav-item"> <a class="nav-link"
+                                    href="{{ route('purchase-products.index') }}">Ürünler</a></li>
                         </ul>
                     </div>
                 </li>
