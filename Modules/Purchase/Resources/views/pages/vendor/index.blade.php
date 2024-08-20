@@ -19,25 +19,26 @@
                 </tr>
             </thead>
             <tbody>
-
-                <tr>
-                    <td>Lorem.</td>
-                    <td>Lorem.</td>
-                    <td>Lorem.</td>
-                    <td>Lorem.</td>
-                    <td>
-                        <a href="{{ route('vendor.show', 1) }}" class="btn btn-info btn-sm">
-                            <i class="fa fa-eye"></i> Show
-                        </a>
-                        <a href=" {{ route('vendor.edit', 1) }}" class="btn btn-warning btn-sm">
-                            <i class="fa fa-edit"></i> Edit
-                        </a>
-                        <a href="{{ route('vendor.delete', 1) }}" class="btn btn-danger btn-sm delete-vendor-table"
-                            data-title="">
-                            <i class="fa fa-trash"></i> Delete
-                        </a>
-                    </td>
-                </tr>
+                @foreach ($purchaseVendors as $purchaseVendor)
+                    <tr>
+                        <td>{{ $purchaseVendor->name }}</td>
+                        <td>{{ $purchaseVendor->company_name }}</td>
+                        <td>{{ $purchaseVendor->email }}</td>
+                        <td>{{ $purchaseVendor->phone }}</td>
+                        <td>
+                            <a href="{{ route('vendor.show', $purchaseVendor->id) }}" class="btn btn-info btn-sm">
+                                <i class="fa fa-eye"></i> Show
+                            </a>
+                            <a href=" {{ route('vendor.edit', $purchaseVendor->id) }}" class="btn btn-warning btn-sm">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <a href="{{ route('vendor.delete', $purchaseVendor->id) }}"
+                                class="btn btn-danger btn-sm delete-vendor-table" data-title="{{ $purchaseVendor->name }}">
+                                <i class="fa fa-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

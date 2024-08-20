@@ -6,7 +6,7 @@
         </div>
         <div class="card mt-4">
             <div class="card-body">
-                <form action="{{ route('vendor.update', 1) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('vendor.update', $purchaseVendor->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row p-20">
                         <div class="col-lg-12">
@@ -15,14 +15,14 @@
                                     <div class="form-group">
                                         <label for="name">İsim<span class="text-danger">*</span></label>
                                         <input type="text" name="name" id="name" class="form-control"
-                                            value="" required>
+                                            value="{{ $purchaseVendor->name }}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="company_name">Şirket Adı</label>
                                         <input type="text" name="company_name" id="company_name"
-                                            class="form-control"value="">
+                                            class="form-control"value="{{ $purchaseVendor->company_name }}">
                                     </div>
                                 </div>
 
@@ -30,14 +30,14 @@
                                     <div class="form-group">
                                         <label for="email">Email</label>
                                         <input type="email" name="email" id="email" class="form-control"
-                                            value="">
+                                            value="{{ $purchaseVendor->email }}">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="phone">Telefon</label>
                                         <input type="text" name="phone" id="phone" class="form-control"
-                                            value="">
+                                            value="{{ $purchaseVendor->phone }}">
                                     </div>
                                 </div>
 
@@ -51,11 +51,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="billing_address">Fatura Adresi</label>
-                                <textarea id="billing_address" name="billing_address" class="form-control"cols="10" rows="5"></textarea>
+                                <textarea id="billing_address" name="billing_address" class="form-control"cols="10" rows="5">{{ $purchaseVendor->billing_address }}</textarea>
                             </div>
                             <div class="col-md-6">
                                 <label for="shipping_address">Gönderi Adresi</label>
-                                <textarea id="shipping_address" name="shipping_address" class="form-control" cols="10" rows="5"></textarea>
+                                <textarea id="shipping_address" name="shipping_address" class="form-control" cols="10" rows="5">{{ $purchaseVendor->shipping_address }}</textarea>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end mt-4">
