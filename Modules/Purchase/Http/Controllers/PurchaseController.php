@@ -23,7 +23,7 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        return view('purchase::create');
+        return view('purchase::pages.vendor.ajax.create');
     }
 
     /**
@@ -33,7 +33,8 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+        return redirect()->route("vendor.index")->with("success", "Veri Tabanına Kaydedildi")->with('alert-type', 'success');
     }
 
     /**
@@ -43,7 +44,7 @@ class PurchaseController extends Controller
      */
     public function show($id)
     {
-        return view('purchase::show');
+        return view('purchase::pages.vendor.ajax.show');
     }
 
     /**
@@ -53,7 +54,7 @@ class PurchaseController extends Controller
      */
     public function edit($id)
     {
-        return view('purchase::edit');
+        return view('purchase::pages.vendor.ajax.edit');
     }
 
     /**
@@ -64,7 +65,8 @@ class PurchaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
+        return redirect()->route("vendor.index")->with("success", "Güncellendi")->with('alert-type', 'success');
     }
 
     /**
@@ -72,8 +74,8 @@ class PurchaseController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        return redirect()->route("vendor.index")->with("success", "Delete Vendor")->with("alert-type", "success");
     }
 }

@@ -17,8 +17,14 @@ use Modules\Purchase\Http\Controllers\PurhcaseProductController;
 
 Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
 
-    Route::group(['prefix' => 'vendors', 'as' => 'vendors.'], function () {
+    Route::group(['prefix' => 'vendors', 'as' => 'vendor.'], function () {
         Route::get('/', [PurchaseController::class, 'index'])->name('index');
+        Route::get("create", [PurchaseController::class, "create"])->name("create");
+        Route::post("store", [PurchaseController::class, 'store'])->name("store");
+        Route::get("{id}/show", [PurchaseController::class, "show"])->name("show");
+        Route::get("{id}/edit", [PurchaseController::class, "edit"])->name("edit");
+        Route::post("{id}/update", [PurchaseController::class, "update"])->name("update");
+        Route::get("{id}/delete", [PurchaseController::class, "delete"])->name("delete");
     });
     Route::group(['prefix' => 'purchase-products', 'as' => 'purchase-products.'], function () {
         Route::get('/', [PurhcaseProductController::class, 'index'])->name('index');

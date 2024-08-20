@@ -186,7 +186,7 @@
                         <ul class="nav flex-column sub-menu">
 
                             <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('vendors.index') }}">Tedarikçi.</a>
+                                    href="{{ route('vendor.index') }}">Tedarikçi.</a>
                             </li>
                             <li class="nav-item"> <a class="nav-link"
                                     href="{{ route('purchase-products.index') }}">Ürünler</a></li>
