@@ -19,24 +19,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Lorem, ipsum.</td>
-                    <td>Lorem, ipsum.</td>
-                    <td>Lorem, ipsum.</td>
-                    <td>Lorem, ipsum.</td>
-                    <td>
-                        <a href="{{ route('purchase-product.show', 1) }}" class="btn btn-info btn-sm">
-                            <i class="fa fa-eye"></i> Show
-                        </a>
-                        <a href=" {{ route('purchase-product.edit', 1) }}" class="btn btn-warning btn-sm">
-                            <i class="fa fa-edit"></i> Edit
-                        </a>
-                        <a href="{{ route('purchase-product.delete', 1) }}"
-                            class="btn btn-danger btn-sm delete-product-table" data-title="">
-                            <i class="fa fa-trash"></i> Delete
-                        </a>
-                    </td>
-                </tr>
+                @foreach ($products as $product)
+                    <tr>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->selling_price }}</td>
+                        <td>{{ $product->stock }}</td>
+                        <td>{{ $product->vendor->name }}</td>
+                        <td>
+                            <a href="{{ route('purchase-product.show', $product->id) }}" class="btn btn-info btn-sm">
+                                <i class="fa fa-eye"></i> Show
+                            </a>
+                            <a href=" {{ route('purchase-product.edit', $product->id) }}" class="btn btn-warning btn-sm">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <a href="{{ route('purchase-product.delete', $product->id) }}"
+                                class="btn btn-danger btn-sm delete-product-table" data-title="{{ $product->name }}">
+                                <i class="fa fa-trash"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

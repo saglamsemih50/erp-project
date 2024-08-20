@@ -10,7 +10,8 @@
         </div>
         <div class="card mt-4">
             <div class="card-body">
-                <form action="{{ route('purchase-product.update', 1) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('purchase-product.update', $product->id) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="row p-20">
                         <div class="col-lg-12">
@@ -19,7 +20,7 @@
                                     <div class="form-group">
                                         <label for="name">İsim<span class="text-danger">*</span></label>
                                         <input type="text" name="name" id="name" class="form-control"
-                                            value="" required>
+                                            value="{{ $product->name }}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -29,7 +30,9 @@
                                             data-live-search="true">
                                             <option value="">Seçiniz</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                                <option value="{{ $category->id }}"
+                                                    {{ $category->id == $product->category_id ? 'selected' : '' }}>
+                                                    {{ $category->category_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -41,7 +44,9 @@
                                             data-live-search="true">
                                             <option value="">Seçiniz</option>
                                             @foreach ($vendors as $vendor)
-                                                <option value="{{ $vendor->id }}">{{ $vendor->name }}</option>
+                                                <option value="{{ $vendor->id }}"
+                                                    {{ $vendor->id == $product->vendor_id ? 'selected' : '' }}>
+                                                    {{ $vendor->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -51,21 +56,21 @@
                                     <div class="form-group">
                                         <label for="selling_price">Satış Fiyatı</label>
                                         <input type="number" name="selling_price" id="selling_price" class="form-control"
-                                            value="" step="0.01">
+                                            value="{{ $product->selling_price }}" step="0.01">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="cost_price">Maliyet Fiyatı</label>
                                         <input type="number" name="cost_price" id="cost_price" class="form-control"
-                                            value="" step="0.01">
+                                            value="{{ $product->cost_price }}" step="0.01">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="stock">Stok</label>
                                         <input type="number" name="stock" id="stock" class="form-control"
-                                            value="" step="1">
+                                            value="{{ $product->stock }}" step="1">
                                     </div>
                                 </div>
 
@@ -79,7 +84,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <label for="description">Açıklama</label>
-                                <textarea id="description" name="description" class="form-control"cols="10" rows="5"></textarea>
+                                <textarea id="description" name="description" class="form-control"cols="10" rows="5">{{ $product->description }}</textarea>
                             </div>
 
                         </div>
