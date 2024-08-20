@@ -36,7 +36,14 @@ Route::group(['middleware' => 'auth', 'prefix' => 'account'], function () {
         Route::post("{id}/update", [PurchaseCategoryProductController::class, "update"])->name("update");
         Route::get("{id}/delete", [PurchaseCategoryProductController::class, "delete"])->name("delete");
     });
-    Route::group(['prefix' => 'purchase-products', 'as' => 'purchase-products.'], function () {
+    Route::group(['prefix' => 'purchase-products', 'as' => 'purchase-product.'], function () {
+
         Route::get('/', [PurhcaseProductController::class, 'index'])->name('index');
+        Route::get("create", [PurhcaseProductController::class, "create"])->name("create");
+        Route::post("store", [PurhcaseProductController::class, "store"])->name("store");
+        Route::get("{id}/show", [PurhcaseProductController::class, "show"])->name("show");
+        Route::get("{id}/edit", [PurhcaseProductController::class, "edit"])->name("edit");
+        Route::post("{id}/update", [PurhcaseProductController::class, "update"])->name("update");
+        Route::get("{id}/delete", [PurhcaseProductController::class, "delete"])->name("delete");
     });
 });

@@ -5,6 +5,8 @@ namespace Modules\Purchase\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Purchase\Entities\ProductCategory;
+use Modules\Purchase\Entities\PurchaseVendor;
 
 class PurhcaseProductController extends Controller
 {
@@ -23,57 +25,43 @@ class PurhcaseProductController extends Controller
      */
     public function create()
     {
-        return view('purchase::create');
+        $categories = ProductCategory::all();
+
+        $vendors = PurchaseVendor::all();
+        return view('purchase::pages.purchase-product.ajax.create', compact('categories', 'vendors'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
+
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+        return redirect()->route("purchase-product.index")->with("success", "Veri Tabanına Kaydedildi")->with('alert-type', 'success');
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
     public function show($id)
     {
-        return view('purchase::show');
+        return view('purchase::pages.purchase-product.ajax.show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
+
     public function edit($id)
     {
-        return view('purchase::edit');
+        $categories = ProductCategory::all();
+
+        $vendors = PurchaseVendor::all();
+        return view('purchase::pages.purchase-product.ajax.edit', compact('categories', 'vendors'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
+        return redirect()->route("purchase-product.index")->with("success", "Güncellendi")->with('alert-type', 'success');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
+
+    public function delete($id)
     {
-        //
+        return redirect()->route("purchase-product.index")->with("success", "Delete Product")->with("alert-type", "success");
     }
 }

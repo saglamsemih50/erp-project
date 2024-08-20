@@ -191,7 +191,7 @@
                             <li class="nav-item"> <a class="nav-link"
                                     href="{{ route('purchase-category-product.index') }}">Ürünler Kategorisi</a></li>
                             <li class="nav-item"> <a class="nav-link"
-                                    href="{{ route('purchase-products.index') }}">Ürünler</a></li>
+                                    href="{{ route('purchase-product.index') }}">Ürünler</a></li>
                         </ul>
                     </div>
                 </li>
